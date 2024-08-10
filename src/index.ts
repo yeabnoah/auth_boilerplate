@@ -1,10 +1,11 @@
-import express from "express";
+import express, { Request, Response } from "express";
 import cors from "cors";
 import compression from "compression";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import http from "http";
 import mongoose from "mongoose";
+import userRoute from "./user/routes/userRoute";
 
 mongoose.connect("mongodb://127.0.0.1:27017/typescriptWithExpress");
 
@@ -20,11 +21,11 @@ app.use(compression());
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-const hello = " user name is used already";
-
-app.get("/", (req, res) => {
+app.get("/", (req: Request, res: Response) => {
   res.json("welcome to the best api Guide");
 });
+
+app.use("/user", userRoute);
 
 const server = http.createServer(app);
 
