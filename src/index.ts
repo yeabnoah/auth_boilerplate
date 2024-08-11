@@ -6,10 +6,21 @@ import cookieParser from "cookie-parser";
 import http from "http";
 import mongoose from "mongoose";
 import userRoute from "./user/routes/userRoute";
+import { config } from "dotenv";
 
-mongoose.connect("mongodb://127.0.0.1:27017/typescriptWithExpress");
+// Load environment variables
+config();
+
+const mongoUri = process.env.MONGODB_URI!;
+const port = process.env.PORT!;
+
+mongoose.connect(mongoUri).catch((error) => {
+  console.error("Error connecting to MongoDB:", error);
+  process.exit(1);
+});
 
 const app = express();
+
 app.use(
   cors({
     origin: true,
@@ -22,7 +33,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.get("/", (req: Request, res: Response) => {
-  res.json("welcome to the best api Guide");
+  res.json("Welcome to the best API guide");
 });
 
 app.use("/user", userRoute);
@@ -32,7 +43,7 @@ const server = http.createServer(app);
 mongoose.connection.once("open", () => {
   console.log("Connected to database");
 
-  server.listen(3000, () => {
-    console.log("API is working at http://localhost:3000/");
+  server.listen(port, () => {
+    console.log(`API is working at http://localhost:${port}/`);
   });
 });
