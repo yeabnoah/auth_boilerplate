@@ -5,6 +5,7 @@ import UserInterface from "../interface/user";
 import userSchema from "../validation/userSchema";
 import smtpGenerateToken from "../token/emailGenerateToken";
 import generateToken from "../token/generateToken";
+import emailSender from "../mail/email";
 
 // lets add a token generation on successful user registration
 
@@ -48,9 +49,13 @@ const createUser = async (req: Request, res: Response) => {
 
     const emailToken = smtpGenerateToken({ email: email });
 
+    const verificationLink: string = `http://localhost:3000/verifyEmail/token=${emailToken}`;
+
+    const emailSendResponse = emailSender(email, verificationLink);
+
     res.status(201).json({
       user: newUser,
-      emailVerificationToken: emailToken,
+      activationLink: verificationLink,
       authToken: token,
     });
   } catch (err: unknown) {
