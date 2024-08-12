@@ -1,0 +1,16 @@
+# instructions to follow for the email verification logic 
+
+#with analogy 
+
+$ Analogy 
+	# alice / user  : say person alice wantes to Join a club and registered to the club
+	# club / server : the club then will prepare a verification of her true identitiy / server will generate a JWT token ( specific to the email )
+	# club / server : sends alice / user a verification email/ letter containing verification method in our case ( JWT like this 
+
+
+	# give her a link of email with params of token generated like 
+
+		endpoint : http://localhost:3000/verifyEmail?token=dsfjhdbfjhsbdfjkbsjdfb
+	****     Step: When Alice clicks the link in her email, she is directed to the /verify-email endpoint on the server, which contains the JWT token as a query parameter.
+
+ 

@@ -8,7 +8,14 @@ const signIn = async (req: Request, res: Response) => {
   try {
     const { username, password } = req.body as signInInterface;
 
-    const checkUserName = await User.findOne({ username });
+    const checkUserName = await User.findOne({ username }).select("password");
+
+    if (!checkUserName?.emailActivated) {
+      return res.status(400).json({
+        message:
+          "your email is not activated please check your email and activate it :)",
+      });
+    }
 
     if (!checkUserName) {
       return res.status(401).json({ message: "Invalid username or password" });

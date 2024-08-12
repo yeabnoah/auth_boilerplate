@@ -38,6 +38,21 @@ const userSchema = new mongoose.Schema(
       enum: ["user", "admin"],
       default: "user",
     },
+    twoFactorAuth: {
+      type: [String],
+      enum: ["email", "phoneNo"],
+      default: [],
+    },
+
+    activeSessions: {
+      type: [
+        {
+          name: String,
+          expiresAt: Date,
+          location: String,
+        },
+      ],
+    },
   },
   {
     timestamps: true,
