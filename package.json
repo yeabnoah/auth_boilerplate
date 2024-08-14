@@ -24,6 +24,7 @@
     "@types/jsonwebtoken": "^9.0.6",
     "@types/mongoose": "^5.11.97",
     "@types/nodemailer": "^6.4.15",
+    "@types/uuid": "^10.0.0",
     "axios": "^1.7.4",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
@@ -36,6 +37,7 @@
     "mongoose": "^8.5.2",
     "nodemailer": "^6.9.14",
     "nodemon": "^3.1.4",
+    "uuid": "^10.0.0",
     "zod": "^3.23.8"
   }
 }

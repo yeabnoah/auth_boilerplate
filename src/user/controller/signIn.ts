@@ -26,7 +26,7 @@ const signIn = async (req: Request, res: Response) => {
 
     const checkPassword = await bcrypt.compare(
       password,
-      checkUserName.password
+      checkUserName.password!
     );
 
     if (!checkPassword) {
