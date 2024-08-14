@@ -12,6 +12,9 @@ import checkEmailVerificationMiddleware from "../middleware/checkEmailMiddleware
 import resetPassword from "../controller/resetPassword";
 import resetPasswordHandler from "../controller/resetPasswordHandler";
 import resetPasswordMiddleware from "../middleware/resetPassMiddleware";
+import githubOauth from "../controller/auth/github/githubOauth";
+import githubCallback from "../controller/auth/github/githubCallback";
+import googleOauth from "../controller/auth/google/googleOath";
 
 const userRoute = Router();
 
@@ -54,8 +57,12 @@ userRoute.post(
   resetPasswordMiddleware,
   resetPasswordHandler
 );
-// this is working on the client side of the project
 
-// userRoute.post("/sendEmailCheck");
+//oauth with oauth like github and Google
+
+userRoute.get("/auth/github", githubOauth);
+userRoute.get("/auth/github/callback", githubCallback);
+
+userRoute.get("auth/google", googleOauth);
 
 export default userRoute;
