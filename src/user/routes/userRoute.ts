@@ -10,6 +10,8 @@ import verifyEmailAgain from "../controller/verifyEmailAgain";
 import nodemailer from "nodemailer";
 import checkEmailVerificationMiddleware from "../middleware/checkEmailMiddleware";
 import resetPassword from "../controller/resetPassword";
+import resetPasswordHandler from "../controller/resetPasswordHandler";
+import resetPasswordMiddleware from "../middleware/resetPassMiddleware";
 
 const userRoute = Router();
 
@@ -46,12 +48,14 @@ userRoute.post(
 );
 
 userRoute.post(
-  "resetPasswordHandler",
+  "/resetPasswordHandler",
   authCheckerMiddleware,
-  checkEmailVerificationMiddleware
+  checkEmailVerificationMiddleware,
+  resetPasswordMiddleware,
+  resetPasswordHandler
 );
 // this is working on the client side of the project
 
-userRoute.post("/sendEmailCheck");
+// userRoute.post("/sendEmailCheck");
 
 export default userRoute;

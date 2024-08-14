@@ -8,17 +8,20 @@ const signIn = async (req: Request, res: Response) => {
   try {
     const { username, password } = req.body as signInInterface;
 
-    const checkUserName = await User.findOne({ username }).select("password");
-
-    if (!checkUserName?.emailActivated) {
-      return res.status(400).json({
-        message:
-          "your email is not activated please check your email and activate it :)",
-      });
-    }
+    // Query the user and include emailActivated in the result
+    const checkUserName = await User.findOne({ username }).select(
+      "password emailActivated"
+    );
 
     if (!checkUserName) {
       return res.status(401).json({ message: "Invalid username or password" });
+    }
+
+    if (!checkUserName.emailActivated) {
+      return res.status(400).json({
+        message:
+          "Your email is not activated. Please check your email and activate it :)",
+      });
     }
 
     const checkPassword = await bcrypt.compare(

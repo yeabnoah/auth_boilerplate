@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import User from "../model/user";
 import smtpGenerateToken from "../token/emailGenerateToken";
 import emailSender from "../mail/email";
+import resetPasswordEmailSender from "../mail/resetPass";
 
 const resetPassword = async (req: Request, res: Response) => {
   const user = req.user;
@@ -14,7 +15,7 @@ const resetPassword = async (req: Request, res: Response) => {
 
   const verificationEmailLink = `http://localhost:3000/user/resetPasswordHandler/?token=${emailToken}`;
 
-  const sendEmail = await emailSender(
+  const sendEmail = await resetPasswordEmailSender(
     userFromDatabase?.email as string,
     verificationEmailLink
   );
