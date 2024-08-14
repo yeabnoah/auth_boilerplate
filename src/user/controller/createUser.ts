@@ -49,13 +49,14 @@ const createUser = async (req: Request, res: Response) => {
 
     const emailToken = smtpGenerateToken({ email: email });
 
-    const verificationLink: string = `http://localhost:3000/verifyEmail/token=${emailToken}`;
+    const verificationLink: string = `http://localhost:3000/user/verifyEmail/?token=${emailToken}`;
 
-    const emailSendResponse = emailSender(email, verificationLink);
+    const emailSendResponse = await emailSender(email, verificationLink);
 
     res.status(201).json({
       user: newUser,
-      activationLink: verificationLink,
+      // activationLink: verificationLink,
+      emailResponse: emailSendResponse,
       authToken: token,
     });
   } catch (err: unknown) {

@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import nodemailer from "nodemailer";
 import User from "../model/user";
 
-const emailSender = async (senderEmail: string, link: string) => {
+const resetPasswordEmailSender = async (senderEmail: string, link: string) => {
   try {
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
@@ -15,14 +15,15 @@ const emailSender = async (senderEmail: string, link: string) => {
     });
 
     const info = await transporter.sendMail({
-      from: '"Auth is calling 😎🔥" <' + process.env.SMTP_EMAIL_USER + ">",
+      from:
+        '"Tech Nerd Auth BoilerPlate" <' + process.env.SMTP_EMAIL_USER + ">",
       to: senderEmail,
-      subject: "EMAIL AUTHENTICATION REQUEST",
+      subject: "Reset Password Verification Email",
       html: `
         <body>
           <div>
             <h1 style="background-color: aqua; color: black; padding: 10px;">
-              Here is your authentication email:
+              Please Verify Your Email:
             </h1>
             <p>Click the link below to authenticate:</p>
             <a href="${link}">${link}</a>
@@ -38,4 +39,4 @@ const emailSender = async (senderEmail: string, link: string) => {
   }
 };
 
-export default emailSender;
+export default resetPasswordEmailSender;

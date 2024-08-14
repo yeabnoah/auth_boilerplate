@@ -20,7 +20,7 @@ const verifyUserEmailAgain = async (req: Request, res: Response) => {
     email: userFound?.email as string,
   });
 
-  const verificationLink = `http://localhost:3000/verifyEmail/?token=${emailVerificationToken}`;
+  const verificationLink = `http://localhost:3000/user/verifyEmail/?token=${emailVerificationToken}`;
 
   const sendEmailResponse = await emailSender(
     userFound?.email as string,
