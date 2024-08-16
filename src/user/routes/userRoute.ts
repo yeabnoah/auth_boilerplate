@@ -16,7 +16,6 @@ import githubOauth from "../controller/auth/github/githubOauth";
 import githubCallback from "../controller/auth/github/githubCallback";
 import googleOauth from "../controller/auth/google/googleOath";
 import googleCallback from "../controller/auth/google/googleCallback";
-
 const userRoute = Router();
 
 userRoute.get(
@@ -67,4 +66,5 @@ userRoute.get("/auth/github/callback", githubCallback);
 userRoute.get("/auth/google", googleOauth);
 
 userRoute.get("/auth/google/callback", googleCallback);
+
 export default userRoute;

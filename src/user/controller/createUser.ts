@@ -6,6 +6,8 @@ import userSchema from "../validation/userSchema";
 import smtpGenerateToken from "../token/emailGenerateToken";
 import generateToken from "../token/generateToken";
 import emailSender from "../mail/email";
+import os from "os";
+import DeviceInformation from "../utils/deviceInfo";
 
 // lets add a token generation on successful user registration
 
@@ -33,6 +35,8 @@ const createUser = async (req: Request, res: Response) => {
       return res.status(400).json({ message: "User already exists" });
     }
 
+    const getDeviceInfo = DeviceInformation(req.ip as string);
+
     const newUserData: UserInterface = {
       name: name,
       email: email,
@@ -45,6 +49,16 @@ const createUser = async (req: Request, res: Response) => {
 
     await newUser.save();
 
+    const user = await User.updateOne(
+      { _id: newUser._id },
+      {
+        $push: {
+          activeSessions: getDeviceInfo,
+        },
+      },
+      { new: true }
+    );
+
     const token = generateToken({ id: newUser._id });
 
     const emailToken = smtpGenerateToken({ email: email });
@@ -55,7 +69,6 @@ const createUser = async (req: Request, res: Response) => {
 
     res.status(201).json({
       user: newUser,
-      // activationLink: verificationLink,
       emailResponse: emailSendResponse,
       authToken: token,
     });

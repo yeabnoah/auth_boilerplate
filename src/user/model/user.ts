@@ -56,9 +56,9 @@ const userSchema = new mongoose.Schema(
     activeSessions: {
       type: [
         {
-          name: String,
-          expiresAt: Date,
-          location: String,
+          deviceIp: String,
+          deviceOs: String,
+          userName: String,
         },
       ],
     },

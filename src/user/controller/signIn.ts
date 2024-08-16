@@ -3,6 +3,7 @@ import User from "../model/user";
 import signInInterface from "../interface/signIn";
 import bcrypt from "bcrypt";
 import generateToken from "../token/generateToken";
+import DeviceInformation from "../utils/deviceInfo";
 
 const signIn = async (req: Request, res: Response) => {
   try {
@@ -35,6 +36,20 @@ const signIn = async (req: Request, res: Response) => {
 
     const generatedTokenValue = generateToken({ id: checkUserName._id });
     res.json({ message: "Logged in successfully", token: generatedTokenValue });
+
+    const getDeviceInfo = DeviceInformation(req.ip as string);
+
+    const newUser = await User.updateOne(
+      {
+        _id: checkUserName._id,
+      },
+      {
+        $push: {
+          activeSessions: getDeviceInfo,
+        },
+      },
+      { new: true }
+    );
   } catch (error) {
     console.error("Error during sign in:", error);
     res.status(500).json({ message: "Internal server error" });
