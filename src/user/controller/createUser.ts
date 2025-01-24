@@ -17,7 +17,7 @@ const createUser = async (req: Request, res: Response) => {
     const errorResponse: string[] = [];
 
     const validation = userSchema.safeParse(req.body);
-
+// test
     if (!validation.success) {
       validation.error.issues.forEach((issue) =>
         errorResponse.push(issue.message)
