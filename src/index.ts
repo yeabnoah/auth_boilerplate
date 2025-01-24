@@ -38,6 +38,11 @@ app.get("/", (req: Request, res: Response) => {
   res.json("Welcome to the best API guide");
 });
 
+app.get("/health", (req :Request, res : Response)=>{
+  res.status(201).json({
+    message : "api health is great"
+  })
+})
 app.use("/user", userRoute);
 
 const server = http.createServer(app);
