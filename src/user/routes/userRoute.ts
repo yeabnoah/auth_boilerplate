@@ -31,6 +31,8 @@ userRoute.get(
   getUserById
 );
 
+//console.log("this is check api for the userrelated api actions")
+
 userRoute.get("/verifyEmail/", authCheckerMiddleware, verifyEmail);
 
 userRoute.post("/createUser", createUser);
